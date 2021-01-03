@@ -15,7 +15,6 @@ dependencies:
   corsac_jwt: ^0.4.0
   json_serializable: any
   equatable: any
-  in_app_purchase: any
   package_info: any
 
 dev_dependencies:

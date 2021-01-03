@@ -1,8 +1,12 @@
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:purchase_validator/src/models/validation_result.dart';
 
 import './apple_purchase_validator.dart' as apple;
 import './google_purchase_validator.dart' as google;
+
+enum PurchaseSource {
+  AppStore,
+  PlayStore,
+}
 
 class PurchaseValidator {
   final apple.ApplePurchaseValidator appleValidator;
@@ -19,9 +23,9 @@ class PurchaseValidator {
     return PurchaseValidator._(appleValidator, googleValidator);
   }
 
-  Future<ValidationResult> getReceipt(IAPSource source, String productId,
+  Future<ValidationResult> getReceipt(PurchaseSource source, String productId,
       String receipt, String transactionId) {
-    if (source == IAPSource.AppStore) {
+    if (source == PurchaseSource.AppStore) {
       return _getReceiptApple(receipt);
     } else {
       return _getReceiptGoogle(productId, receipt);
@@ -37,9 +41,9 @@ class PurchaseValidator {
     return googleValidator.getPurchaseInfo(productId, receipt);
   }
 
-  Future<bool> validate(IAPSource source, String productId, String receipt,
+  Future<bool> validate(PurchaseSource source, String productId, String receipt,
       String transactionId) {
-    if (source == IAPSource.AppStore) {
+    if (source == PurchaseSource.AppStore) {
       return _validateApple(receipt, transactionId);
     } else {
       return _validateGoogle(productId, receipt, transactionId);
