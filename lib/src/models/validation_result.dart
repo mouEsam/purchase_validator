@@ -2,6 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:purchase_validator/src/apple_purchase_validator.dart';
 import 'package:purchase_validator/src/google_purchase_validator.dart';
 
+enum ValidationState {
+  Valid,
+  Invalid,
+  Unknown,
+}
+
 abstract class ValidationResult<T> extends Equatable {
   final T data;
   final int status;
