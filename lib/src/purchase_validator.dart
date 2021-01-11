@@ -59,7 +59,7 @@ class PurchaseValidator {
           (element) => element.transactionId == transactionId,
           orElse: () => null);
       final valid =
-          transaction != null && transaction.cancellationDateMs == null;
+          transaction == null || transaction.cancellationDateMs == null;
       validationState = valid ? ValidationState.Valid : ValidationState.Invalid;
     } else if ([21002, 21004, 21005, 21009, 21010].contains(info.status)) {
       validationState = ValidationState.Unknown;
