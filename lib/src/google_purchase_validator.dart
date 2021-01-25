@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'models/google/google_token_response.dart';
 import 'models/google/google_validation.dart';
@@ -13,9 +13,6 @@ import 'models/google/google_validation_result.dart';
 
 export 'models/google/google_validation.dart';
 export 'models/google/google_validation_result.dart';
-
-const String GET_TOKEN = 'https://accounts.google.com/o/oauth2/token';
-const String SCOPE = 'https://www.googleapis.com/auth/androidpublisher';
 
 class _Token {
   final String token;
@@ -29,6 +26,10 @@ class _Token {
 }
 
 class GooglePurchaseValidator {
+  static const String _GET_TOKEN = 'https://accounts.google.com/o/oauth2/token';
+  static const String _SCOPE =
+      'https://www.googleapis.com/auth/androidpublisher';
+
   final String _packageName;
   final String _clientEmail;
   final String _privateKey;
@@ -58,10 +59,10 @@ class GooglePurchaseValidator {
     var builder = JWTBuilder();
     builder
       ..issuer = _clientEmail
-      ..audience = GET_TOKEN
+      ..audience = _GET_TOKEN
       ..expiresAt = now.add(Duration(hours: 1))
       ..issuedAt = now
-      ..setClaim('scope', SCOPE);
+      ..setClaim('scope', _SCOPE);
     var signer = JWTRsaSha256Signer(privateKey: _privateKey);
     var signedToken = builder.getSignedToken(signer);
     var stringToken = signedToken.toString();
@@ -69,7 +70,7 @@ class GooglePurchaseValidator {
   }
 
   Future<_Token> _requestToken() async {
-    final result = await http.post(GET_TOKEN,
+    final result = await http.post(_GET_TOKEN,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded'
         },
