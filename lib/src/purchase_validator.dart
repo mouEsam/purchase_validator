@@ -25,10 +25,16 @@ class PurchaseValidator {
 
   Future<ValidationResult> getReceipt(PurchaseSource source, String productId,
       String receipt, String transactionId) {
-    if (source == PurchaseSource.AppStore) {
-      return _getReceiptApple(receipt);
-    } else {
-      return _getReceiptGoogle(productId, receipt);
+    try {
+      if (source == PurchaseSource.AppStore) {
+        return _getReceiptApple(receipt);
+      } else {
+        return _getReceiptGoogle(productId, receipt);
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return Future.value(null);
     }
   }
 
@@ -43,10 +49,16 @@ class PurchaseValidator {
 
   Future<ValidationState> validate(PurchaseSource source, String productId,
       String receipt, String transactionId) {
-    if (source == PurchaseSource.AppStore) {
-      return _validateApple(receipt, transactionId);
-    } else {
-      return _validateGoogle(productId, receipt, transactionId);
+    try {
+      if (source == PurchaseSource.AppStore) {
+        return _validateApple(receipt, transactionId);
+      } else {
+        return _validateGoogle(productId, receipt, transactionId);
+      }
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return Future.value(ValidationState.Unknown);
     }
   }
 
