@@ -15,7 +15,6 @@ dependencies:
   corsac_jwt: ^0.4.0
   json_annotation: any
   equatable: any
-  package_info_plus: any
 
 dev_dependencies:
   flutter_test:

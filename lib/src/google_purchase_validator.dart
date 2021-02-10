@@ -39,13 +39,16 @@ class GooglePurchaseValidator {
 
   _Token token;
 
-  static Future<GooglePurchaseValidator> create(String keyAssetPath) async {
+  static Future<GooglePurchaseValidator> create(String keyAssetPath,
+      [String packageName]) async {
     final keyTxt = await rootBundle.loadString(keyAssetPath);
     final key = jsonDecode(keyTxt);
     final clientEmail = key['client_email'];
     final privateKey = key['private_key'];
-    final packageInfo = await PackageInfo.fromPlatform();
-    final packageName = packageInfo.packageName;
+    if (packageName == null) {
+      final packageInfo = await PackageInfo.fromPlatform();
+      packageName = packageInfo.packageName;
+    }
     return GooglePurchaseValidator._(packageName, clientEmail, privateKey);
   }
 
