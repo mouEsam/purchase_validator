@@ -73,7 +73,7 @@ class GooglePurchaseValidator {
   }
 
   Future<_Token> _requestToken() async {
-    final result = await http.post(_GET_TOKEN,
+    final result = await http.post(Uri.parse(_GET_TOKEN),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded'
         },
@@ -96,7 +96,7 @@ class GooglePurchaseValidator {
       token = await _requestToken();
     }
     final url = _getProductUrl(productId, purchaseToken, token.token, false);
-    final result = await http.get(url);
+    final result = await http.get(Uri.parse(url));
     final json = jsonDecode(result.body);
     final validation = GoogleValidationResponse.fromJson(json);
     GooglePurchaseInfo receipt;

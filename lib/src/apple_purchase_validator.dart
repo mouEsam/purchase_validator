@@ -124,7 +124,7 @@ class ApplePurchaseValidator {
       [bool sandbox = false]) async {
     final url = sandbox ? sandboxPath : prodPath;
     const jsonType = 'application/json';
-    final result = await http.post(url,
+    final result = await http.post(Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: jsonType,
           HttpHeaders.acceptHeader: jsonType
