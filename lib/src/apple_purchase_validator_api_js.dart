@@ -80,7 +80,7 @@ bool toBool(val) {
   return val == 'true' ? true : false;
 }
 
-bool isExpired(Map<String, dynamic> receipt) {
+bool isExpired(Map<String, dynamic>? receipt) {
   if (receipt != null && receipt[REC_KEYS.EXPIRES_DATE] != null) {
     var exp = DateTime.tryParse(receipt[REC_KEYS.EXPIRES_DATE]);
     if (exp != null || exp!.isBefore(DateTime.now())) {
@@ -91,7 +91,7 @@ bool isExpired(Map<String, dynamic> receipt) {
   return false;
 }
 
-int? getSubscriptionExpireDate(Map<String, dynamic> data) {
+int? getSubscriptionExpireDate(Map<String, dynamic>? data) {
   if (data == null) {
     return 0;
   }
