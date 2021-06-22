@@ -10,9 +10,9 @@ class GoogleTokenResponse {
     this.tokenType,
   });
 
-  final String accessToken;
-  final int expiresIn;
-  final String tokenType;
+  final String? accessToken;
+  final int? expiresIn;
+  final String? tokenType;
 
   factory GoogleTokenResponse.fromJson(Map<String, dynamic> json) => _$GoogleTokenResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GoogleTokenResponseToJson(this);

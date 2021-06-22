@@ -16,7 +16,7 @@ class PurchaseValidator {
 
   static Future<PurchaseValidator> create(
       String googleKeyAssetPath, String appleAppSecret,
-      [String googlePackageName]) async {
+      [String? googlePackageName]) async {
     final appleValidator =
         apple.ApplePurchaseValidator(appleAppSecret, false, false, false);
     final googleValidator = await google.GooglePurchaseValidator.create(
@@ -68,9 +68,10 @@ class PurchaseValidator {
     ValidationState validationState = ValidationState.Unknown;
     final info = await appleValidator.getPurchaseInfo(receipt);
     if (info.status == 0 && info.data != null) {
-      final transaction = info.data.firstWhere(
-          (element) => element.transactionId == transactionId,
-          orElse: () => null);
+      final apple.AppleReceipt? transaction = info.data
+          .cast<apple.AppleReceipt?>()
+          .firstWhere((element) => element?.transactionId == transactionId,
+              orElse: () => null);
       final valid =
           transaction != null && transaction.cancellationDateMs == null;
       validationState = valid ? ValidationState.Valid : ValidationState.Invalid;
@@ -89,7 +90,7 @@ class PurchaseValidator {
     final info = await googleValidator.getPurchaseInfo(productId, receipt);
     valid = info.status == 0 &&
         info.data != null &&
-        info.data.purchaseState != google.PurchaseState.Canceled;
+        info.data!.purchaseState != google.PurchaseState.Canceled;
     validationState = valid ? ValidationState.Valid : ValidationState.Invalid;
     return validationState;
   }

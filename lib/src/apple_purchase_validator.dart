@@ -45,13 +45,14 @@ class ApplePurchaseValidator {
     final purchase = await _validateReceipt(receipt);
     final result = <AppleReceipt>[];
     if (purchase.receipt?.inApp?.isNotEmpty ?? false) {
-      final receipts = purchase.receipt.inApp
+      final receipts = purchase.receipt!.inApp!
+          .whereType<LatestReceiptInfo>()
           .map((receiptResponse) => AppleReceipt.fromResponse(receiptResponse))
           .toList();
       receipts.sort((a, b) {
-        return a.purchaseDateMs.compareTo(b.purchaseDateMs);
+        return a.purchaseDateMs!.compareTo(b.purchaseDateMs!);
       });
-      final tIds = <String>[];
+      final tIds = <String?>[];
       final now = DateTime.now();
       for (final receipt in receipts) {
         final tId = receipt.originalTransactionId;
@@ -82,7 +83,7 @@ class ApplePurchaseValidator {
         result.add(receipt);
       }
     } else if (purchase.latestReceiptInfo != null) {
-      final receipt = AppleReceipt.fromResponse(purchase.latestReceiptInfo);
+      final receipt = AppleReceipt.fromResponse(purchase.latestReceiptInfo!);
       result.add(receipt);
     }
     // ### If the IAP was not purchased then the "in_app" field would be missing.
@@ -91,7 +92,7 @@ class ApplePurchaseValidator {
     //   result.add(receipt);
     // }
     return AppleValidationResult(
-        result, purchase.status, errorMap[purchase.status]);
+        result, purchase.status, errorMap[purchase.status!]);
   }
 
   Future<AppleValidationResponse> _validateReceipt(String receipt) async {
@@ -104,7 +105,7 @@ class ApplePurchaseValidator {
     if (validationResult.status == 21007) {
       validationResult = await _sendValidationRequest(content, true);
     }
-    if (validationResult.status > 0 &&
+    if (validationResult.status! > 0 &&
         validationResult.status != 21007 &&
         validationResult.status != 21002) {
       if (validationResult.status == 21006 && !validationResult.isExpired) {

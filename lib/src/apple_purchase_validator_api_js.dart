@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -82,7 +83,7 @@ bool toBool(val) {
 bool isExpired(Map<String, dynamic> receipt) {
   if (receipt != null && receipt[REC_KEYS.EXPIRES_DATE] != null) {
     var exp = DateTime.tryParse(receipt[REC_KEYS.EXPIRES_DATE]);
-    if (exp != null || exp.isBefore(DateTime.now())) {
+    if (exp != null || exp!.isBefore(DateTime.now())) {
       return true;
     }
     return false;
@@ -90,7 +91,7 @@ bool isExpired(Map<String, dynamic> receipt) {
   return false;
 }
 
-int getSubscriptionExpireDate(Map<String, dynamic> data) {
+int? getSubscriptionExpireDate(Map<String, dynamic> data) {
   if (data == null) {
     return 0;
   }
@@ -196,9 +197,9 @@ Future<List<Map<String, dynamic>>> getPurchaseInfo(String receipt) async {
       REC_KEYS.IS_TRIAL: toBool(receipt[REC_KEYS.IS_TRIAL_PERIOD]),
       REC_KEYS.CANCELLATION_DATE_MS: receipt[REC_KEYS.CANCELLATION_DATE_MS] ?? 0
     });
-    return data;
+    return data as FutureOr<List<Map<String, dynamic>>>;
   }
-  return data;
+  return data as FutureOr<List<Map<String, dynamic>>>;
 }
 
 Future<Map<String, dynamic>> _validateReceipt(String receipt) async {
@@ -208,10 +209,10 @@ Future<Map<String, dynamic>> _validateReceipt(String receipt) async {
     'exclude-old-transactions': appleExcludeOldTransactions,
   };
   var validationResult = await _sendValidationRequest(content);
-  if (validationResult[REC_KEYS.STATUS] == 21007) {
-    validationResult = await _sendValidationRequest(content, true);
+  if (validationResult![REC_KEYS.STATUS] == 21007) {
+    validationResult = await (_sendValidationRequest(content, true));
   }
-  if (validationResult[REC_KEYS.STATUS] > 0 &&
+  if (validationResult![REC_KEYS.STATUS] > 0 &&
       validationResult[REC_KEYS.STATUS] != 21007 &&
       validationResult[REC_KEYS.STATUS] != 21002) {
     if (validationResult[REC_KEYS.STATUS] == 21006 &&
@@ -227,7 +228,7 @@ Future<Map<String, dynamic>> _validateReceipt(String receipt) async {
   return validationResult;
 }
 
-Future<Map<String, dynamic>> _sendValidationRequest(
+Future<Map<String, dynamic>?> _sendValidationRequest(
     Map<String, dynamic> content,
     [bool sandbox = false]) async {
   final url = sandbox ? sandboxPath : prodPath;

@@ -9,20 +9,20 @@ part of 'google_validation_response.dart';
 GoogleValidationResponse _$GoogleValidationResponseFromJson(
     Map<String, dynamic> json) {
   return GoogleValidationResponse(
-    kind: json['kind'] as String,
-    purchaseTimeMillis: json['purchaseTimeMillis'] as String,
-    purchaseState: json['purchaseState'] as int,
-    consumptionState: json['consumptionState'] as int,
-    developerPayload: json['developerPayload'] as String,
-    orderId: json['orderId'] as String,
-    purchaseType: json['purchaseType'] as int,
-    acknowledgementState: json['acknowledgementState'] as int,
-    purchaseToken: json['purchaseToken'] as String,
-    productId: json['productId'] as String,
-    quantity: json['quantity'] as int,
-    obfuscatedExternalAccountId: json['obfuscatedExternalAccountId'] as String,
-    obfuscatedExternalProfileId: json['obfuscatedExternalProfileId'] as String,
-    regionCode: json['regionCode'] as String,
+    kind: json['kind'] as String?,
+    purchaseTimeMillis: json['purchaseTimeMillis'] as String?,
+    purchaseState: json['purchaseState'] as int?,
+    consumptionState: json['consumptionState'] as int?,
+    developerPayload: json['developerPayload'] as String?,
+    orderId: json['orderId'] as String?,
+    purchaseType: json['purchaseType'] as int?,
+    acknowledgementState: json['acknowledgementState'] as int?,
+    purchaseToken: json['purchaseToken'] as String?,
+    productId: json['productId'] as String?,
+    quantity: json['quantity'] as int?,
+    obfuscatedExternalAccountId: json['obfuscatedExternalAccountId'] as String?,
+    obfuscatedExternalProfileId: json['obfuscatedExternalProfileId'] as String?,
+    regionCode: json['regionCode'] as String?,
     error: json['error'] == null
         ? null
         : GoogleValidationResponseError.fromJson(
@@ -53,10 +53,10 @@ Map<String, dynamic> _$GoogleValidationResponseToJson(
 GoogleValidationResponseError _$GoogleValidationResponseErrorFromJson(
     Map<String, dynamic> json) {
   return GoogleValidationResponseError(
-    code: json['code'] as int,
-    message: json['message'] as String,
-    status: json['status'] as String,
-    errors: (json['errors'] as List)
+    code: json['code'] as int?,
+    message: json['message'] as String?,
+    status: json['status'] as String?,
+    errors: (json['errors'] as List?)
         ?.map((e) =>
             e == null ? null : ErrorElement.fromJson(e as Map<String, dynamic>))
         ?.toList(),
@@ -74,11 +74,11 @@ Map<String, dynamic> _$GoogleValidationResponseErrorToJson(
 
 ErrorElement _$ErrorElementFromJson(Map<String, dynamic> json) {
   return ErrorElement(
-    message: json['message'] as String,
-    domain: json['domain'] as String,
-    reason: json['reason'] as String,
-    location: json['location'] as String,
-    locationType: json['locationType'] as String,
+    message: json['message'] as String?,
+    domain: json['domain'] as String?,
+    reason: json['reason'] as String?,
+    location: json['location'] as String?,
+    locationType: json['locationType'] as String?,
   );
 }
 
@@ -94,20 +94,20 @@ Map<String, dynamic> _$ErrorElementToJson(ErrorElement instance) =>
 GooglePurchaseResource _$GooglePurchaseResourceFromJson(
     Map<String, dynamic> json) {
   return GooglePurchaseResource(
-    kind: json['kind'] as String,
-    purchaseTimeMillis: json['purchaseTimeMillis'] as String,
-    purchaseState: json['purchaseState'] as int,
-    consumptionState: json['consumptionState'] as int,
-    developerPayload: json['developerPayload'] as String,
-    orderId: json['orderId'] as String,
-    purchaseType: json['purchaseType'] as int,
-    acknowledgementState: json['acknowledgementState'] as int,
-    purchaseToken: json['purchaseToken'] as String,
-    productId: json['productId'] as String,
-    quantity: json['quantity'] as int,
-    obfuscatedExternalAccountId: json['obfuscatedExternalAccountId'] as String,
-    obfuscatedExternalProfileId: json['obfuscatedExternalProfileId'] as String,
-    regionCode: json['regionCode'] as String,
+    kind: json['kind'] as String?,
+    purchaseTimeMillis: json['purchaseTimeMillis'] as String?,
+    purchaseState: json['purchaseState'] as int?,
+    consumptionState: json['consumptionState'] as int?,
+    developerPayload: json['developerPayload'] as String?,
+    orderId: json['orderId'] as String?,
+    purchaseType: json['purchaseType'] as int?,
+    acknowledgementState: json['acknowledgementState'] as int?,
+    purchaseToken: json['purchaseToken'] as String?,
+    productId: json['productId'] as String?,
+    quantity: json['quantity'] as int?,
+    obfuscatedExternalAccountId: json['obfuscatedExternalAccountId'] as String?,
+    obfuscatedExternalProfileId: json['obfuscatedExternalProfileId'] as String?,
+    regionCode: json['regionCode'] as String?,
   );
 }
 

@@ -5,41 +5,42 @@ part 'google_validation_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.none)
 class GoogleValidationResponse extends GooglePurchaseResource {
   GoogleValidationResponse({
-    String kind,
-     String purchaseTimeMillis,
-     int purchaseState,
-     int consumptionState,
-     String developerPayload,
-     String orderId,
-     int purchaseType,
-     int acknowledgementState,
-     String purchaseToken,
-     String productId,
-     int quantity,
-     String obfuscatedExternalAccountId,
-     String obfuscatedExternalProfileId,
-     String regionCode,
+    String? kind,
+    String? purchaseTimeMillis,
+    int? purchaseState,
+    int? consumptionState,
+    String? developerPayload,
+    String? orderId,
+    int? purchaseType,
+    int? acknowledgementState,
+    String? purchaseToken,
+    String? productId,
+    int? quantity,
+    String? obfuscatedExternalAccountId,
+    String? obfuscatedExternalProfileId,
+    String? regionCode,
     this.error,
-  }): super(
-    kind: kind,
-    purchaseTimeMillis: purchaseTimeMillis,
-    purchaseState: purchaseState,
-    consumptionState: consumptionState,
-    developerPayload: developerPayload,
-    orderId: orderId,
-    purchaseType: purchaseType,
-    acknowledgementState: acknowledgementState,
-    purchaseToken: purchaseToken,
-    productId: productId,
-    quantity: quantity,
-    obfuscatedExternalAccountId: obfuscatedExternalAccountId,
-    obfuscatedExternalProfileId: obfuscatedExternalProfileId,
-    regionCode: regionCode,
-  );
+  }) : super(
+          kind: kind,
+          purchaseTimeMillis: purchaseTimeMillis,
+          purchaseState: purchaseState,
+          consumptionState: consumptionState,
+          developerPayload: developerPayload,
+          orderId: orderId,
+          purchaseType: purchaseType,
+          acknowledgementState: acknowledgementState,
+          purchaseToken: purchaseToken,
+          productId: productId,
+          quantity: quantity,
+          obfuscatedExternalAccountId: obfuscatedExternalAccountId,
+          obfuscatedExternalProfileId: obfuscatedExternalProfileId,
+          regionCode: regionCode,
+        );
 
-  final GoogleValidationResponseError error;
+  final GoogleValidationResponseError? error;
 
-  factory GoogleValidationResponse.fromJson(Map<String, dynamic> json) => _$GoogleValidationResponseFromJson(json);
+  factory GoogleValidationResponse.fromJson(Map<String, dynamic> json) =>
+      _$GoogleValidationResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GoogleValidationResponseToJson(this);
 }
 
@@ -52,12 +53,13 @@ class GoogleValidationResponseError {
     this.errors,
   });
 
-  final int code;
-  final String message;
-  final String status;
-  final List<ErrorElement> errors;
+  final int? code;
+  final String? message;
+  final String? status;
+  final List<ErrorElement?>? errors;
 
-  factory GoogleValidationResponseError.fromJson(Map<String, dynamic> json) => _$GoogleValidationResponseErrorFromJson(json);
+  factory GoogleValidationResponseError.fromJson(Map<String, dynamic> json) =>
+      _$GoogleValidationResponseErrorFromJson(json);
   Map<String, dynamic> toJson() => _$GoogleValidationResponseErrorToJson(this);
 }
 
@@ -71,13 +73,14 @@ class ErrorElement {
     this.locationType,
   });
 
-  final String message;
-  final String domain;
-  final String reason;
-  final String location;
-  final String locationType;
+  final String? message;
+  final String? domain;
+  final String? reason;
+  final String? location;
+  final String? locationType;
 
-  factory ErrorElement.fromJson(Map<String, dynamic> json) => _$ErrorElementFromJson(json);
+  factory ErrorElement.fromJson(Map<String, dynamic> json) =>
+      _$ErrorElementFromJson(json);
   Map<String, dynamic> toJson() => _$ErrorElementToJson(this);
 }
 
@@ -100,21 +103,22 @@ class GooglePurchaseResource {
     this.regionCode,
   });
 
-  final String kind;
-  final String purchaseTimeMillis;
-  final int purchaseState;
-  final int consumptionState;
-  final String developerPayload;
-  final String orderId;
-  final int purchaseType;
-  final int acknowledgementState;
-  final String purchaseToken;
-  final String productId;
-  final int quantity;
-  final String obfuscatedExternalAccountId;
-  final String obfuscatedExternalProfileId;
-  final String regionCode;
+  final String? kind;
+  final String? purchaseTimeMillis;
+  final int? purchaseState;
+  final int? consumptionState;
+  final String? developerPayload;
+  final String? orderId;
+  final int? purchaseType;
+  final int? acknowledgementState;
+  final String? purchaseToken;
+  final String? productId;
+  final int? quantity;
+  final String? obfuscatedExternalAccountId;
+  final String? obfuscatedExternalProfileId;
+  final String? regionCode;
 
-  factory GooglePurchaseResource.fromJson(Map<String, dynamic> json) => _$GooglePurchaseResourceFromJson(json);
+  factory GooglePurchaseResource.fromJson(Map<String, dynamic> json) =>
+      _$GooglePurchaseResourceFromJson(json);
   Map<String, dynamic> toJson() => _$GooglePurchaseResourceToJson(this);
 }

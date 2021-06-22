@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
 
 import 'apple_validation_response.dart';
@@ -17,9 +18,8 @@ extension on InAppOwnershipType {
 }
 
 extension on String {
-  InAppOwnershipType get inAppOwnershipType => InAppOwnershipType.values
-      .firstWhere((element) => element.stringRepresentation == this,
-          orElse: () => null);
+  InAppOwnershipType? get inAppOwnershipType => InAppOwnershipType.values
+      .firstWhereOrNull((element) => element.stringRepresentation == this);
 }
 
 class AppleReceipt extends Equatable {
@@ -41,28 +41,28 @@ class AppleReceipt extends Equatable {
       this.webOrderLineItemId,
       this.transactionId});
 
-  final DateTime cancellationDate;
-  final DateTime expirationDate;
-  final InAppOwnershipType inAppOwnershipType;
-  final bool isInIntroOfferPeriod;
-  final bool isTrial;
-  final bool isUpgraded;
-  final String offerCodeRefName;
-  final DateTime originalPurchaseDate;
-  final String originalTransactionId;
-  final String productId;
-  final String promotionalOfferId;
-  final DateTime purchaseDate;
-  final int quantity;
-  final String subscriptionGroupIdentifier;
-  final String webOrderLineItemId;
-  final String transactionId;
+  final DateTime? cancellationDate;
+  final DateTime? expirationDate;
+  final InAppOwnershipType? inAppOwnershipType;
+  final bool? isInIntroOfferPeriod;
+  final bool? isTrial;
+  final bool? isUpgraded;
+  final String? offerCodeRefName;
+  final DateTime? originalPurchaseDate;
+  final String? originalTransactionId;
+  final String? productId;
+  final String? promotionalOfferId;
+  final DateTime? purchaseDate;
+  final int? quantity;
+  final String? subscriptionGroupIdentifier;
+  final String? webOrderLineItemId;
+  final String? transactionId;
 
-  int get purchaseDateMs => purchaseDate?.millisecondsSinceEpoch;
-  int get originalPurchaseDateMs =>
+  int? get purchaseDateMs => purchaseDate?.millisecondsSinceEpoch;
+  int? get originalPurchaseDateMs =>
       originalPurchaseDate?.millisecondsSinceEpoch;
-  int get cancellationDateMs => cancellationDate?.millisecondsSinceEpoch;
-  int get expirationDateMs => expirationDate?.millisecondsSinceEpoch;
+  int? get cancellationDateMs => cancellationDate?.millisecondsSinceEpoch;
+  int? get expirationDateMs => expirationDate?.millisecondsSinceEpoch;
 
   factory AppleReceipt.fromReceipt(Receipt receipt) {
     print(receipt);
@@ -89,7 +89,7 @@ class AppleReceipt extends Equatable {
     final originalPurchaseDate = originalPurchaseDateMs == null
         ? null
         : DateTime.fromMillisecondsSinceEpoch(originalPurchaseDateMs);
-    final quantity = int.tryParse(receiptInfo.quantity) ?? 1;
+    final quantity = int.tryParse(receiptInfo.quantity!) ?? 1;
     final cancellationDateMs = _appleDateTime(
         receiptInfo.cancellationDateMs, receiptInfo.cancellationDate);
     final cancellationDate = cancellationDateMs == null
@@ -132,7 +132,7 @@ class AppleReceipt extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         cancellationDate,
         expirationDate,
         inAppOwnershipType,
@@ -152,8 +152,8 @@ class AppleReceipt extends Equatable {
       ];
 }
 
-int _appleDateTime(String inMillis, String iso8601) {
-  int result;
+int? _appleDateTime(String? inMillis, String? iso8601) {
+  int? result;
   if (inMillis != null) {
     result = int.tryParse(inMillis);
   } else if (iso8601 != null) {

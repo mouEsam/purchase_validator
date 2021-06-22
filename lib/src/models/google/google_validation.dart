@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -19,15 +20,15 @@ extension on PurchaseState {
   }
 }
 
-class PurchaseStateConverter implements JsonConverter<PurchaseState, int> {
+class PurchaseStateConverter implements JsonConverter<PurchaseState?, int?> {
   const PurchaseStateConverter();
   @override
-  PurchaseState fromJson(int json) {
+  PurchaseState? fromJson(int? json) {
     return json?.purchaseState;
   }
 
   @override
-  int toJson(PurchaseState object) {
+  int? toJson(PurchaseState? object) {
     return object?.id;
   }
 }
@@ -35,7 +36,7 @@ class PurchaseStateConverter implements JsonConverter<PurchaseState, int> {
 enum PurchaseType { Normal, Test, Promo, Rewarded }
 
 extension on PurchaseType {
-  int get id {
+  int? get id {
     switch (this) {
       case PurchaseType.Test:
         return 0;
@@ -49,15 +50,15 @@ extension on PurchaseType {
   }
 }
 
-class PurchaseTypeConverter implements JsonConverter<PurchaseType, int> {
+class PurchaseTypeConverter implements JsonConverter<PurchaseType, int?> {
   const PurchaseTypeConverter();
   @override
-  PurchaseType fromJson(int json) {
+  PurchaseType fromJson(int? json) {
     return json?.purchaseType ?? PurchaseType.Normal;
   }
 
   @override
-  int toJson(PurchaseType object) {
+  int? toJson(PurchaseType object) {
     return object?.id;
   }
 }
@@ -77,15 +78,15 @@ extension on ConsumptionState {
 }
 
 class ConsumptionStateConverter
-    implements JsonConverter<ConsumptionState, int> {
+    implements JsonConverter<ConsumptionState?, int?> {
   const ConsumptionStateConverter();
   @override
-  ConsumptionState fromJson(int json) {
+  ConsumptionState? fromJson(int? json) {
     return json?.consumptionState;
   }
 
   @override
-  int toJson(ConsumptionState object) {
+  int? toJson(ConsumptionState? object) {
     return object?.id;
   }
 }
@@ -105,29 +106,29 @@ extension on AcknowledgementState {
 }
 
 class AcknowledgementStateConverter
-    implements JsonConverter<AcknowledgementState, int> {
+    implements JsonConverter<AcknowledgementState?, int?> {
   const AcknowledgementStateConverter();
   @override
-  AcknowledgementState fromJson(int json) {
+  AcknowledgementState? fromJson(int? json) {
     return json?.acknowledgementState;
   }
 
   @override
-  int toJson(AcknowledgementState object) {
+  int? toJson(AcknowledgementState? object) {
     return object?.id;
   }
 }
 
 extension on int {
-  PurchaseState get purchaseState => PurchaseState.values
-      .firstWhere((element) => element.id == this, orElse: () => null);
-  ConsumptionState get consumptionState => ConsumptionState.values
-      .firstWhere((element) => element.id == this, orElse: () => null);
+  PurchaseState? get purchaseState => PurchaseState.values
+      .firstWhereOrNull((element) => element.id == this);
+  ConsumptionState? get consumptionState => ConsumptionState.values
+      .firstWhereOrNull((element) => element.id == this);
   PurchaseType get purchaseType =>
       PurchaseType.values.firstWhere((element) => element.id == this,
           orElse: () => PurchaseType.Normal);
-  AcknowledgementState get acknowledgementState => AcknowledgementState.values
-      .firstWhere((element) => element.id == this, orElse: () => null);
+  AcknowledgementState? get acknowledgementState => AcknowledgementState.values
+      .firstWhereOrNull((element) => element.id == this);
 }
 
 class GooglePurchaseInfo extends Equatable {
@@ -167,26 +168,26 @@ class GooglePurchaseInfo extends Equatable {
     );
   }
 
-  final String kind;
-  final String purchaseTimeMillis;
-  final PurchaseState purchaseState;
-  final ConsumptionState consumptionState;
-  final String developerPayload;
-  final String orderId;
-  final PurchaseType purchaseType;
-  final AcknowledgementState acknowledgementState;
-  final String purchaseToken;
-  final String productId;
-  final int quantity;
-  final String obfuscatedExternalAccountId;
-  final String obfuscatedExternalProfileId;
-  final String regionCode;
+  final String? kind;
+  final String? purchaseTimeMillis;
+  final PurchaseState? purchaseState;
+  final ConsumptionState? consumptionState;
+  final String? developerPayload;
+  final String? orderId;
+  final PurchaseType? purchaseType;
+  final AcknowledgementState? acknowledgementState;
+  final String? purchaseToken;
+  final String? productId;
+  final int? quantity;
+  final String? obfuscatedExternalAccountId;
+  final String? obfuscatedExternalProfileId;
+  final String? regionCode;
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         kind,
         purchaseTimeMillis,
         purchaseState,

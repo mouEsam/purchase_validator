@@ -8,9 +8,9 @@ part of 'google_token_response.dart';
 
 GoogleTokenResponse _$GoogleTokenResponseFromJson(Map<String, dynamic> json) {
   return GoogleTokenResponse(
-    accessToken: json['access_token'] as String,
-    expiresIn: json['expires_in'] as int,
-    tokenType: json['token_type'] as String,
+    accessToken: json['access_token'] as String?,
+    expiresIn: json['expires_in'] as int?,
+    tokenType: json['token_type'] as String?,
   );
 }
 
