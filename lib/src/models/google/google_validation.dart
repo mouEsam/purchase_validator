@@ -59,7 +59,7 @@ class PurchaseTypeConverter implements JsonConverter<PurchaseType, int?> {
 
   @override
   int? toJson(PurchaseType object) {
-    return object?.id;
+    return object.id;
   }
 }
 
@@ -120,10 +120,10 @@ class AcknowledgementStateConverter
 }
 
 extension on int {
-  PurchaseState? get purchaseState => PurchaseState.values
-      .firstWhereOrNull((element) => element.id == this);
-  ConsumptionState? get consumptionState => ConsumptionState.values
-      .firstWhereOrNull((element) => element.id == this);
+  PurchaseState? get purchaseState =>
+      PurchaseState.values.firstWhereOrNull((element) => element.id == this);
+  ConsumptionState? get consumptionState =>
+      ConsumptionState.values.firstWhereOrNull((element) => element.id == this);
   PurchaseType get purchaseType =>
       PurchaseType.values.firstWhere((element) => element.id == this,
           orElse: () => PurchaseType.Normal);

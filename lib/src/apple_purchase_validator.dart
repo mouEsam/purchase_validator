@@ -92,7 +92,7 @@ class ApplePurchaseValidator {
     //   result.add(receipt);
     // }
     return AppleValidationResult(
-        result, purchase.status, errorMap[purchase.status!]);
+        result, purchase.status ?? 0, errorMap[purchase.status]);
   }
 
   Future<AppleValidationResponse> _validateReceipt(String receipt) async {

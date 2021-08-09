@@ -10,7 +10,7 @@ enum ValidationState {
 
 abstract class ValidationResult<T> extends Equatable {
   final T data;
-  final int? status;
+  final int status;
   final String? errorMessage;
 
   const ValidationResult(this.data, this.status, this.errorMessage);

@@ -14,9 +14,8 @@ class PurchaseValidator {
 
   PurchaseValidator._(this.appleValidator, this.googleValidator);
 
-  static Future<PurchaseValidator> create(
-      String googleKeyAssetPath, String appleAppSecret,
-      [String? googlePackageName]) async {
+  static Future<PurchaseValidator> create(String googleKeyAssetPath,
+      String appleAppSecret, String googlePackageName) async {
     final appleValidator =
         apple.ApplePurchaseValidator(appleAppSecret, false, false, false);
     final googleValidator = await google.GooglePurchaseValidator.create(
