@@ -35,6 +35,7 @@ class AppleReceipt extends Equatable {
       this.originalTransactionId,
       this.productId,
       this.promotionalOfferId,
+      this.receiptType,
       this.purchaseDate,
       this.quantity,
       this.subscriptionGroupIdentifier,
@@ -52,6 +53,7 @@ class AppleReceipt extends Equatable {
   final String? originalTransactionId;
   final String? productId;
   final String? promotionalOfferId;
+  final String? receiptType;
   final DateTime? purchaseDate;
   final int? quantity;
   final String? subscriptionGroupIdentifier;
@@ -65,7 +67,6 @@ class AppleReceipt extends Equatable {
   int? get expirationDateMs => expirationDate?.millisecondsSinceEpoch;
 
   factory AppleReceipt.fromReceipt(Receipt receipt) {
-    print(receipt);
     print(receipt.toJson()..removeWhere((key, value) => value == null));
     final originalPurchaseDateMs = _appleDateTime(
         receipt.originalPurchaseDateMs, receipt.originalPurchaseDate);
@@ -80,6 +81,7 @@ class AppleReceipt extends Equatable {
     return AppleReceipt._(
       originalPurchaseDate: originalPurchaseDate,
       expirationDate: expirationDate,
+      receiptType: receipt.receiptType,
     );
   }
 
@@ -148,7 +150,8 @@ class AppleReceipt extends Equatable {
         quantity,
         subscriptionGroupIdentifier,
         webOrderLineItemId,
-        transactionId
+        transactionId,
+        receiptType
       ];
 }
 

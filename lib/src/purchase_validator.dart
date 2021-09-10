@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:purchase_validator/src/models/validation_result.dart';
 
 import './apple_purchase_validator.dart' as apple;
@@ -66,11 +67,11 @@ class PurchaseValidator {
       String receipt, String transactionId) async {
     ValidationState validationState = ValidationState.Unknown;
     final info = await appleValidator.getPurchaseInfo(receipt);
-    if (info.status == 0 && info.data != null) {
-      final apple.AppleReceipt? transaction = info.data
-          .cast<apple.AppleReceipt?>()
-          .firstWhere((element) => element?.transactionId == transactionId,
-              orElse: () => null);
+    if (info.status == 0 && info.data.isNotEmpty) {
+      final transaction = info.data.firstWhereOrNull(
+              (element) => element.transactionId == transactionId) ??
+          info.data.firstWhereOrNull(
+              (element) => element.receiptType?.contains('Sandbox') == true);
       final valid =
           transaction != null && transaction.cancellationDateMs == null;
       validationState = valid ? ValidationState.Valid : ValidationState.Invalid;
