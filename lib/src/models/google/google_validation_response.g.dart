@@ -56,10 +56,10 @@ GoogleValidationResponseError _$GoogleValidationResponseErrorFromJson(
     code: json['code'] as int?,
     message: json['message'] as String?,
     status: json['status'] as String?,
-    errors: (json['errors'] as List?)
+    errors: (json['errors'] as List<dynamic>?)
         ?.map((e) =>
             e == null ? null : ErrorElement.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+        .toList(),
   );
 }
 

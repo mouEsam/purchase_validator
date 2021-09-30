@@ -3,6 +3,30 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'apple_validation_response.g.dart';
 
+List<LatestReceiptInfo>? _ifSingleToMultipleReceipt(json) {
+  if (json is Map<String, dynamic>) {
+    return [LatestReceiptInfo.fromJson(json)];
+  } else if (json is List) {
+    return json
+        .map((e) => _ifSingleToMultipleReceipt(e))
+        .whereType<List<LatestReceiptInfo>>()
+        .expand((element) => element)
+        .toList();
+  }
+}
+
+List<PendingRenewalInfo>? _ifSingleToMultipleRenewal(json) {
+  if (json is Map<String, dynamic>) {
+    return [PendingRenewalInfo.fromJson(json)];
+  } else if (json is List) {
+    return json
+        .map((e) => _ifSingleToMultipleReceipt(e))
+        .whereType<List<PendingRenewalInfo>>()
+        .expand((element) => element)
+        .toList();
+  }
+}
+
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AppleValidationResponse {
   const AppleValidationResponse({
@@ -20,13 +44,19 @@ class AppleValidationResponse {
   final bool? isRetryable;
   final int? status;
   final String? latestReceipt;
-  final LatestReceiptInfo? latestReceiptInfo;
-  final PendingRenewalInfo? pendingRenewalInfo;
+  @JsonKey(fromJson: _ifSingleToMultipleReceipt)
+  final List<LatestReceiptInfo>? latestReceiptInfo;
+  @JsonKey(fromJson: _ifSingleToMultipleRenewal)
+  final List<PendingRenewalInfo>? pendingRenewalInfo;
   final Receipt? receipt;
 
+  LatestReceiptInfo? get latestReceiptItem =>
+      latestReceiptInfo?.isNotEmpty == true ? latestReceiptInfo!.last : null;
+
   bool get isExpired {
-    if (latestReceiptInfo != null && latestReceiptInfo!.expiresDate != null) {
-      var exp = DateTime.tryParse(latestReceiptInfo!.expiresDate!);
+    final latest = latestReceiptItem;
+    if (latest != null && latest.expiresDate != null) {
+      var exp = DateTime.tryParse(latest.expiresDate!);
       if (exp != null || exp!.isBefore(DateTime.now())) {
         return true;
       }
@@ -40,8 +70,8 @@ class AppleValidationResponse {
     bool? isRetryable,
     int? status,
     String? latestReceipt,
-    LatestReceiptInfo? latestReceiptInfo,
-    PendingRenewalInfo? pendingRenewalInfo,
+    List<LatestReceiptInfo>? latestReceiptInfo,
+    List<PendingRenewalInfo>? pendingRenewalInfo,
     Receipt? receipt,
   }) =>
       AppleValidationResponse(

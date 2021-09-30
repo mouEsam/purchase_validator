@@ -83,8 +83,10 @@ class ApplePurchaseValidator {
         result.add(receipt);
       }
     } else if (purchase.latestReceiptInfo != null) {
-      final receipt = AppleReceipt.fromResponse(purchase.latestReceiptInfo!);
-      result.add(receipt);
+      purchase.latestReceiptInfo?.forEach((receipt) {
+        final item = AppleReceipt.fromResponse(receipt);
+        result.add(item);
+      });
     }
     //### If the IAP was not purchased then the "in_app" field would be missing.
     else if (purchase.receipt != null) {

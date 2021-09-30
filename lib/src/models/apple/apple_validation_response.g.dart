@@ -13,14 +13,9 @@ AppleValidationResponse _$AppleValidationResponseFromJson(
     isRetryable: json['is-retryable'] as bool?,
     status: json['status'] as int?,
     latestReceipt: json['latest_receipt'] as String?,
-    latestReceiptInfo: json['latest_receipt_info'] == null
-        ? null
-        : LatestReceiptInfo.fromJson(
-            json['latest_receipt_info'] as Map<String, dynamic>),
-    pendingRenewalInfo: json['pending_renewal_info'] == null
-        ? null
-        : PendingRenewalInfo.fromJson(
-            json['pending_renewal_info'] as Map<String, dynamic>),
+    latestReceiptInfo: _ifSingleToMultipleReceipt(json['latest_receipt_info']),
+    pendingRenewalInfo:
+        _ifSingleToMultipleRenewal(json['pending_renewal_info']),
     receipt: json['receipt'] == null
         ? null
         : Receipt.fromJson(json['receipt'] as Map<String, dynamic>),
@@ -140,11 +135,11 @@ Receipt _$ReceiptFromJson(Map<String, dynamic> json) {
     expirationDate: json['expiration_date'] as String?,
     expirationDateMs: json['expiration_date_ms'] as String?,
     expirationDatePst: json['expiration_date_pst'] as String?,
-    inApp: (json['in_app'] as List?)
+    inApp: (json['in_app'] as List<dynamic>?)
         ?.map((e) => e == null
             ? null
             : LatestReceiptInfo.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+        .toList(),
     originalApplicationVersion: json['original_application_version'] as String?,
     originalPurchaseDate: json['original_purchase_date'] as String?,
     originalPurchaseDateMs: json['original_purchase_date_ms'] as String?,
